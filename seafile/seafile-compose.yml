@@ -1,0 +1,35 @@
+services:
+  seafile-mysql:
+    image: mariadb:${SEAFILE_MYSQL_VERSION}
+    container_name: seafile-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${SEAFILE_MYSQL_ROOT_PASSWORD}
+      - MYSQL_LOG_CONSOLE=${SEAFILE_MYSQL_LOG_CONSOLE}
+      - MARIADB_AUTO_UPGRADE=${SEAFILE_MYSQL_AUTO_UPGRADE} 
+    volumes:
+      - ${SEAFILE_MYSQL_DATA_LOCATION}:/var/lib/mysql
+
+  seafile-memcached:
+    image: memcached:${SEAFILE_MEMCACHED_VERSION}
+    container_name: seafile-memcached
+    entrypoint: memcached -m 256
+
+  seafile:
+    image: seafileltd/seafile-mc:${SEAFILE_VERSION}
+    container_name: seafile
+    ports:
+      - "${SEAFILE_HTTP_PORT}:80"
+      - "${SEAFILE_HTTPS_PORT}:443"
+    volumes:
+      - ${SEAFILE_DATA_LOCATION}:/shared
+    environment:
+      - DB_HOST=seafile-mysql
+      - DB_ROOT_PASSWD=${SEAFILE_MYSQL_ROOT_PASSWORD}
+      - TIME_ZONE=${TZ}
+      - SEAFILE_ADMIN_EMAIL=${SEAFILE_ADMIN_EMAIL}
+      - SEAFILE_ADMIN_PASSWORD=${SEAFILE_ADMIN_PASSWORD}
+      - SEAFILE_SERVER_LETSENCRYPT=${SEAFILE_SERVER_LETSENCRYPT_ENABLED}
+      - SEAFILE_SERVER_HOSTNAME=${SEAFILE_SERVER_HOSTNAME}
+    depends_on:
+      - seafile-mysql
+      - seafile-memcached

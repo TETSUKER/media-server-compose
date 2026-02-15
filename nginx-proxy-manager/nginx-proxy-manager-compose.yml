@@ -1,0 +1,14 @@
+services:
+  nginxproxymanager:
+    image: 'jc21/nginx-proxy-manager:${NGINX_PROXY_MANAGER_VERSION}'
+    container_name: nginxproxymanager
+    ports:
+      - '${NGINX_PROXY_MANAGER_HTTP_PORT}:80'
+      - '${NGINX_PROXY_MANAGER_ADMIN_WEB_PORT}:81'
+      - '${NGINX_PROXY_MANAGER_HTTPS_PORT}:443'
+    volumes:
+      - ${NGINX_PROXY_MANAGER_DATA_LOCATION}:/data
+      - ${NGINX_PROXY_MANAGER_LETSENCRYPT_LOCATION}:/etc/letsencrypt
+    environment:
+      TZ: ${TZ}
+    restart: unless-stopped

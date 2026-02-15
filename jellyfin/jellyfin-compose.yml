@@ -1,0 +1,34 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:${JELLYFIN_VERSION}
+    container_name: jellyfin
+    network_mode: "service:gluetun"
+    user: uid:gid
+    ports:
+      - ${JELLYFIN_PORT_TCP}:8096/tcp
+      - ${JELLYFIN_PORT_UDP}:7359/udp
+    volumes:
+      - ${JELLYFIN_CONFIG_LOCATION}:/config
+      - ${JELLYFIN_CACHE_LOCATION}:/cache
+      - ${JELLYFIN_TVSHOWS_LOCATION}:/data/tvshows
+      - ${JELLYFIN_MOVIES_LOCATION}:/data/movies
+      - ${JELLYFIN_MUSIC_LOCATION}:/data/music
+    environment:
+      - TZ=${TZ}
+    restart: unless-stopped
+
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    restart: unless-stopped
+    ports:
+      - ${JELLYFIN_PORT_TCP}:${JELLYFIN_PORT_TCP}
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    volumes:
+      - ./gluetunconf:/gluetun
+    environment:
+      - VPN_SERVICE_PROVIDER=
+      - VPN_TYPE=

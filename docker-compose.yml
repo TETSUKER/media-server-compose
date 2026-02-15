@@ -1,0 +1,8 @@
+include:
+  - path: ./immich/immich-compose.yml
+  - path: ./jellyfin/jellyfin-compose.yml
+  - path: ./nginx-proxy-manager/nginx-proxy-manager-compose.yml
+  - path: ./portainer/portainer-compose.yml
+  - path: ./qbittorrent/qbittorrent-compose.yml
+  - path: ./seafile/seafile-compose.yml
+  - path: ./vaultwarden/vaultwarden-compose.yml
