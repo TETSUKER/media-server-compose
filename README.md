@@ -17,5 +17,5 @@ In order to recreate the container using docker compose, run `docker compose up 
 
 ```sh
 DOCKER_SOCK=/var/run/docker.sock
-TZ=Europe/Moscow # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+TZ=Etc/UTC # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 ```
