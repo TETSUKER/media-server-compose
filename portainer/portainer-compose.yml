@@ -5,7 +5,7 @@ services:
     environment:
       - TZ=${TZ}
     volumes:
-      - ${DOCKER_SOCKET}:/var/run/docker.sock
+      - ${DOCKER_SOCK}:/var/run/docker.sock
       - ${PORTAINER_DATA_LOCATION}:/data
     ports:
       - "${PORTAINER_HTTP_PORT}:8000"
