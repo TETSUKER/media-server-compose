@@ -5,8 +5,6 @@ services:
     volumes:
       - ${IMMICH_UPLOAD_LOCATION}:/data
       - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .env
     ports:
       - '${IMMICH_PORT}:2283'
     environment:
