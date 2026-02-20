@@ -1,12 +1,13 @@
 # media-server-compose
 My personal media server compose files:
-- [Nginx Proxy Manager](https://nginxproxymanager.com/);
-- [Jellyfin](https://jellyfin.org/);
-- [Vaultwarden](https://github.com/dani-garcia/vaultwarden);
+- [Homepage](https://gethomepage.dev/)
 - [Immich](https://immich.app/);
+- [Jellyfin](https://jellyfin.org/);
+- [Nginx Proxy Manager](https://nginxproxymanager.com/);
 - [ownCloud](https://owncloud.com/);
 - [Portainer](https://www.portainer.io/);
 - [qBittorrent](https://www.qbittorrent.org/);
+- [Vaultwarden](https://github.com/dani-garcia/vaultwarden);
 
 ## Environment Variables
 
