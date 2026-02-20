@@ -11,4 +11,10 @@ services:
       - ${NGINX_PROXY_MANAGER_LETSENCRYPT_LOCATION}:/etc/letsencrypt
     environment:
       TZ: ${TZ}
+    networks:
+      - media-server-network
     restart: unless-stopped
+
+networks:
+  media-server-network:
+    name: media-server-network

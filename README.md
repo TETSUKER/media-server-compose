@@ -4,7 +4,7 @@ My personal media server compose files:
 - [Jellyfin](https://jellyfin.org/);
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden);
 - [Immich](https://immich.app/);
-- [Seafile](seafile.com);
+- [ownCloud](https://owncloud.com/);
 - [Portainer](https://www.portainer.io/);
 - [qBittorrent](https://www.qbittorrent.org/);
 
@@ -18,4 +18,6 @@ In order to recreate the container using docker compose, run `docker compose up 
 ```sh
 DOCKER_SOCK=/var/run/docker.sock
 TZ=Etc/UTC # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+PUID=1000
+PGID=999 # getent group docker
 ```

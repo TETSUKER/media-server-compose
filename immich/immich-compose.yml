@@ -5,13 +5,19 @@ services:
     volumes:
       - ${IMMICH_UPLOAD_LOCATION}:/data
       - /etc/localtime:/etc/localtime:ro
-    ports:
-      - '${IMMICH_PORT}:2283'
     environment:
       IMMICH_MACHINE_LEARNING_ENABLED: false
+      DB_USERNAME: postgres
+      DB_DATABASE_NAME: immich
+      DB_HOSTNAME: immich-postgres
+      REDIS_HOSTNAME: immich-redis
+    env_file:
+      - ../.env
     depends_on:
       - immich-redis
       - immich-postgres
+    networks:
+      - media-server-network
     restart: always
     healthcheck:
       disable: false
@@ -21,20 +27,28 @@ services:
     image: docker.io/valkey/valkey:${IMMICH_REDIS_VERSION}
     healthcheck:
       test: redis-cli ping || exit 1
+    networks:
+      - media-server-network
     restart: always
 
   immich-postgres:
     container_name: immich-postgres
     image: ghcr.io/immich-app/postgres:${IMMICH_POSTGRES_VERSION}
     environment:
-      POSTGRES_PASSWORD: ${IMMICH_POSTGRES_PASSWORD}
+      POSTGRES_PASSWORD: $IMMICH_POSTGRES_PASSWORD
       POSTGRES_USER: postgres
       POSTGRES_DB: immich
       POSTGRES_INITDB_ARGS: '--data-checksums'
-      DB_STORAGE_TYPE: ${IMMICH_POSTGRES_DB_STORAGE_TYPE}
+      DB_STORAGE_TYPE: $IMMICH_POSTGRES_DB_STORAGE_TYPE
     volumes:
       - ${IMMICH_POSTGRES_DATA_LOCATION}:/var/lib/postgresql/data
     shm_size: 128mb
     restart: always
+    networks:
+      - media-server-network
     healthcheck:
       disable: false
+
+networks:
+  media-server-network:
+    name: media-server-network

@@ -1,0 +1,65 @@
+---
+- Column 1:
+    - Jellyfin:
+        icon: jellyfin.png
+        href: ${JELLYFIN_DOMAIN}
+        description: Фильмы, сериалы, музыка
+        server: my-docker
+        container: jellyfin
+        showStats: true
+        statusStyle: "dot"
+
+    - ownCloud:
+        icon: owncloud.png
+        href: ${OWNCLOUD_DOMAIN}
+        description: Хранилище файлов
+        server: my-docker
+        container: owncloud
+        showStats: true
+        statusStyle: "dot"
+
+    - qBittorrent:
+        icon: qbittorrent.png
+        href: ${QBITTORRENT_DOMAIN}
+        description: Торрент-клиент
+        server: my-docker
+        container: qbittorrent
+        showStats: true
+        statusStyle: "dot"
+
+    - Nginx Proxy Manager:
+        icon: nginx-proxy-manager.png
+        href: ${NGINX_PROXY_MANAGER_DOMAIN}
+        description: Управление прокси-хостами и SSL
+        server: my-docker
+        container: nginxproxymanager
+        showStats: true
+        statusStyle: "dot"
+
+- Column 2:
+    - Immich:
+        icon: immich.png
+        href: ${IMMICH_DOMAIN}
+        description: Фото хостинг
+        server: my-docker
+        container: immich
+        showStats: true
+        statusStyle: "dot"
+
+    - Vaultwarden:
+        icon: vaultwarden.png
+        href: ${VAULTWARDEN_DOMAIN}
+        description: Менеджер паролей (Bitwarden)
+        server: my-docker
+        container: vaultwarden
+        showStats: true
+        statusStyle: "dot"
+
+    - Portainer:
+        icon: portainer.png
+        href: ${PORTAINER_DOMAIN}
+        description: Администрирование Docker
+        server: my-docker
+        container: portainer
+        showStats: true
+        statusStyle: "dot"

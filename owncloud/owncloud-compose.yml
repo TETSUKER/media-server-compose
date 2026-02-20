@@ -1,0 +1,70 @@
+services:
+  owncloud:
+    image: owncloud/server:${OWNCLOUD_VERSION}
+    container_name: owncloud
+    restart: always
+    depends_on:
+      - owncloud-mysql
+      - owncloud-redis
+    environment:
+      OWNCLOUD_DOMAIN: ${OWNCLOUD_DOMAIN}
+      OWNCLOUD_TRUSTED_DOMAINS: ${OWNCLOUD_TRUSTED_DOMAINS}
+      OWNCLOUD_DB_TYPE: mysql
+      OWNCLOUD_DB_NAME: owncloud
+      OWNCLOUD_DB_USERNAME: owncloud
+      OWNCLOUD_DB_PASSWORD: owncloud
+      OWNCLOUD_DB_HOST: owncloud-mysql
+      OWNCLOUD_ADMIN_USERNAME: ${OWNCLOUD_ADMIN_USERNAME}
+      OWNCLOUD_ADMIN_PASSWORD: ${OWNCLOUD_ADMIN_PASSWORD}
+      OWNCLOUD_MYSQL_UTF8MB4: true
+      OWNCLOUD_REDIS_ENABLED: true
+      OWNCLOUD_REDIS_HOST: owncloud-redis
+    healthcheck:
+      test: ["CMD", "/usr/bin/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - media-server-network
+    volumes:
+      - ${OWNCLOUD_DATA_LOCATION}:/mnt/data
+
+  owncloud-mysql:
+    image: mariadb:${OWNCLOUD_MYSQL_VERSION}
+    container_name: owncloud-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: owncloud
+      MYSQL_USER: owncloud
+      MYSQL_PASSWORD: owncloud
+      MYSQL_DATABASE: owncloud
+      MARIADB_AUTO_UPGRADE: 1
+    command: ["--max-allowed-packet=128M", "--innodb-log-file-size=64M"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-u", "root", "--password=owncloud"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - media-server-network
+    volumes:
+      - ${OWNCLOUD_MYSQL_DATA_LOCATION}:/var/lib/mysql
+
+  owncloud-redis:
+    image: redis:${OWNCLOUD_REDIS_VERSION}
+    container_name: owncloud-redis
+    restart: always
+    command: ["--databases", "1"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - media-server-network
+    volumes:
+      - ${OWNCLOUD_REDIS_DATA_LOCATION}:/data
+
+networks:
+  media-server-network:
+    name: media-server-network

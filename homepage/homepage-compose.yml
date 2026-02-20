@@ -1,0 +1,31 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:${HOMEPAGE_VERSION}
+    container_name: homepage
+    volumes:
+      - homepage_config:/app/config
+      - ./config:/host-config:ro
+      - ${DOCKER_SOCK}:/var/run/docker.sock:ro
+      - ./init.sh:/init.sh:ro
+    entrypoint: ["/init.sh"]
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: $HOMEPAGE_ALLOWED_HOSTS
+      PUID: $PUID
+      PGID: $PGID
+      JELLYFIN_DOMAIN: $JELLYFIN_DOMAIN
+      PORTAINER_DOMAIN: $PORTAINER_DOMAIN
+      VAULTWARDEN_DOMAIN: $VAULTWARDEN_DOMAIN
+      NGINX_PROXY_MANAGER_DOMAIN: $NGINX_PROXY_MANAGER_DOMAIN
+      QBITTORRENT_DOMAIN: $QBITTORRENT_DOMAIN
+      OWNCLOUD_DOMAIN: $OWNCLOUD_DOMAIN
+      IMMICH_DOMAIN: $IMMICH_DOMAIN
+    networks:
+      - media-server-network
+    restart: unless-stopped
+
+volumes:
+  homepage_config:
+
+networks:
+  media-server-network:
+    name: media-server-network

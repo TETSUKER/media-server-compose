@@ -1,0 +1,16 @@
+---
+title: Home page
+theme: dark
+headerStyle: boxedWidgets
+hideVersion: true
+
+layout:
+  iconsOnly: true
+
+  Column 1:
+    header: false
+    style: column
+  
+  Column 2:
+    header: false
+    style: column

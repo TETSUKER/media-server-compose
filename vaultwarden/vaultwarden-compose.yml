@@ -3,10 +3,14 @@ services:
     container_name: vaultwarden
     image: vaultwarden/server:${VAULTWARDEN_VERSION}
     environment:
-      - SIGNUPS_ALLOWED=${VAULTWARDEN_SIGNUPS_ALLOWED}
-      - DOMAIN=${VAULTWARDEN_DOMAIN}
+      SIGNUPS_ALLOWED: $VAULTWARDEN_SIGNUPS_ALLOWED
+      DOMAIN: $VAULTWARDEN_DOMAIN
     volumes:
       - ${VAULTWARDEN_DATA_LOCATION}:/data/
-    ports:
-      - ${VAULTWARDEN_PORT}:80
+    networks:
+      - media-server-network
     restart: unless-stopped
+
+networks:
+  media-server-network:
+    name: media-server-network
