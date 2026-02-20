@@ -1,6 +1,6 @@
 # media-server-compose
 My personal media server compose files:
-- [Homepage](https://gethomepage.dev/)
+- [Homepage](https://gethomepage.dev/);
 - [Immich](https://immich.app/);
 - [Jellyfin](https://jellyfin.org/);
 - [Nginx Proxy Manager](https://nginxproxymanager.com/);
